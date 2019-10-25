@@ -31,8 +31,6 @@ public class ProfileController {
     @Resource
     ClassmateCourseService classmateCourseService;
     @Resource
-    SelectCourseService selectCourseService;
-    @Resource
     CourseService courseService;
     @Resource
     PersonCourseDTODao personCourseDTODao;
@@ -59,10 +57,8 @@ public class ProfileController {
     //跳转个人课表
     @RequestMapping("/personCourse")
     public String toPersonCourse(HttpServletRequest request){
-//        //跳转到对应用户界面时传入相应信息
-       UserDTO responseUser = (UserDTO) request.getSession().getAttribute("user");
-
-
+        //跳转到对应用户界面时传入相应信息
+        UserDTO responseUser = (UserDTO) request.getSession().getAttribute("user");
         List<PersonCourseDTO> personCourseDTOS = new ArrayList<>();//定义个人课程集合（班级课表+选修课表）
         User user = new User();
         user.setClassmateId(responseUser.getClassmateId());
@@ -72,23 +68,6 @@ public class ProfileController {
             course.setCourseName(courseService.getCourseById(course.getCourseId()).getCourseName());
             personCourseDTOS.add(course);
         }
-//        //班级课表
-//        List<ClassmateCourse> classmateCourse = classmateCourseService.getClassmateCourse(responseUser.getClassmateId());
-//        for (ClassmateCourse course : classmateCourse){
-//            PersonCourseDTO personCourseDTO = new PersonCourseDTO();
-//            BeanUtils.copyProperties(course,personCourseDTO);
-//            personCourseDTO.setCourseName(courseService.getCourseById(course.getCourseId()).getCourseName());
-//            personCourseDTOS.add(personCourseDTO);
-//        }
-//        //个人课表
-//        List<SelectCourse> personCourses = selectCourseService.getPersonCourse(responseUser.getAccount());
-//        for (SelectCourse personCourse : personCourses){
-//            PersonCourseDTO personCourseDTO2 = new PersonCourseDTO();
-//            BeanUtils.copyProperties(personCourse, personCourseDTO2);
-//            personCourseDTO2.setCourseName(courseService.getCourseById(personCourse.getCourseId()).getCourseName());
-//            personCourseDTOS.add(personCourseDTO2);
-//        }
-
         request.setAttribute("personCourseDTOS", personCourseDTOS);
         return "profile";
     }

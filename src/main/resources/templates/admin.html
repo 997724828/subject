@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>后台管理</title>
+    <link rel="stylesheet" href="/static/css/bootstrap.css">
+    <link rel="stylesheet" href="/static/css/bootstrap-theme.css">
+    <link rel="stylesheet" href="/static/css/AdminPage.css">
+    <script src="/static/js/jquery-3.4.1.js"></script>
+    <script src="/static/js/bootstrap.js"></script>
+</head>
+<body>
+<div class="main">
+    <div class="left">
+        <ul class="list-group">
+            <li class="list-group-item"><a href="/allInstitutes">所有学院</a></li>
+            <li class="list-group-item"><a href="#">所有班级</a></li>
+        </ul>
+    </div>
+    <div class="center">
+        <div id="allInstitutes" th:if="${instituteList}">
+            <table class="table table-hover">
+                <tr>
+                    <th>序号</th>
+                    <th>学院编号</th>
+                    <th>学院名称</th>
+                    <th>操作</th>
+                </tr>
+                <tr th:each="list,listState:${instituteList}">
+                    <td th:text="${listState.count}"></td>
+                    <td th:text="${list.instituteId}"></td>
+                    <td th:text="${list.instituteName}"></td>
+                    <td><a href="">编辑</a><a th:href="@{'/delInstitute/'+${list.instituteId}}">删除</a></td>
+                </tr>
+            </table>
+        </div>
+    </div>
+</div>
+</body>
+</html>

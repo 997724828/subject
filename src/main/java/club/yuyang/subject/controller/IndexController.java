@@ -20,12 +20,16 @@ public class IndexController {
     @Resource
     UserService userService;
 
-
+//  跳转后台界面
+    @RequestMapping("/admin")
+    public String toAdmin(){
+        return "admin";
+    }
 
 //  跳转首页
     @RequestMapping("/")
     public String login(HttpServletRequest request){
-       request.setAttribute("message","[　欢迎使用我要蹭课系统　]");
+       request.setAttribute("message","欢迎使用NJIT课程管理系统");
         return "login";
     }
 

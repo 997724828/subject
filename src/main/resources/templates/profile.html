@@ -29,7 +29,7 @@
         <div class="left_down">
             <ul class="person_url">
                 <li><img src="/static/img/cengke-icon.png" class="icon"/>&nbsp;
-                    <a href="#">我要蹭课</a>
+                    <a class="icon">我要选课</a>
                 </li>
                 <li><img src="/static/img/changePaw-icon.png" class="icon"/>&nbsp;
                     <a style="cursor: pointer" data-toggle="modal" data-target="#PawModal">修改密码</a></li>
@@ -53,7 +53,6 @@
                     <th>节次</th>
                     <th>教室</th>
                     <th>类型</th>
-
                 </tr>
                 <tr th:each="list,listState:${classmateCourseDTOS}">
                     <td th:text="${listState.count}"></td>
@@ -103,6 +102,54 @@
                 </tr>
             </table>
         </div>
+        <!--<div class="modal fade" id="selectModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">-->
+            <!--<div class="modal-dialog" role="document">-->
+                <!--<div class="modal-content">-->
+                    <!--<form action="#" method="post" style="text-align: left;" id="addOrUpdateForm">-->
+                        <!--<div class="modal-header">-->
+                            <!--<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>-->
+                            <!--<h4 class="modal-title" id="myModalLabel">选择课程</h4>-->
+                        <!--</div>-->
+                        <!--<div class="modal-body">-->
+                            <!--<input type="hidden" name="schoolId" th:value="${session.user.schoolId}">-->
+                            <!--<input type="hidden" name="instituteId" th:value="${session.user.instituteId}">-->
+                            <!--<input type="hidden" name="classmateId" th:value="${session.user.classmateId}">-->
+                            <!--课程名称：<input type="text" id="courseName" name="courseName" class="form-control inputs" required/><br>-->
+                            <!--教室地点：<input type="text" id="address" name="address" class="form-control inputs" required/><br>-->
+                            <!--授课老师：<input type="text" id="teacherName" name="teacherName" class="form-control inputs" required/><br>-->
+                            <!--时间：-->
+                            <!--<div style="margin-bottom: 20px;">-->
+                                <!--<select id="times" name="times" class="form-control inputs" style="float: left;">-->
+                                    <!--<option value ="星期一">周一</option>-->
+                                    <!--<option value ="星期二">周二</option>-->
+                                    <!--<option value ="星期三">周三</option>-->
+                                    <!--<option value ="星期四">周四</option>-->
+                                    <!--<option value ="星期五">周五</option>-->
+                                    <!--<option value ="星期六">周六</option>-->
+                                    <!--<option value ="星期日">周日</option>-->
+                                <!--</select>-->
+                                <!--<select id="sections" name="sections" class="form-control inputs">-->
+                                    <!--<option value ="1-2">1-2</option>-->
+                                    <!--<option value ="3-4">3-4</option>-->
+                                    <!--<option value ="5-6">5-6</option>-->
+                                    <!--<option value ="7-8">7-8</option>-->
+                                    <!--<option value ="9-10">9-10</option>-->
+                                    <!--<option value ="11">11</option>-->
+                                <!--</select>-->
+                            <!--</div>-->
+                            <!--<div>类型：-->
+                                <!--<label><input id="type1" type="radio" name="types" value="必修" checked>必修</label>-->
+                                <!--<label><input id="type2" type="radio" name="types" value="选修">选修</label>-->
+                            <!--</div>-->
+                        <!--</div>-->
+                        <!--<div class="modal-footer">-->
+                            <!--<button type="button" class="btn btn-default" data-dismiss="modal">取消</button>-->
+                            <!--<button type="submit" class="btn btn-primary">提交</button>-->
+                        <!--</div>-->
+                    <!--</form>-->
+                <!--</div>-->
+            <!--</div>-->
+        <!--</div>-->
 
     </div>
     <!--右侧公告栏-->

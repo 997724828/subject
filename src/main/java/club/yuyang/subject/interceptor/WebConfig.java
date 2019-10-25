@@ -17,7 +17,7 @@ public class WebConfig implements WebMvcConfigurer {
 
     @Override
     public void addInterceptors(InterceptorRegistry registry){
-        String[] excludes = new String[]{"/","/out","/static/**","/index"};
+        String[] excludes = new String[]{"/","/out","/static/**","/index","/admin"};
         registry.addInterceptor(loginHandlerInterceptor).addPathPatterns("/**")
                 .excludePathPatterns(excludes);
     }

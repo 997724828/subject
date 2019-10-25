@@ -2,10 +2,12 @@ package club.yuyang.subject.serviceImpl;
 
 
 import club.yuyang.subject.dao.InstituteDao;
+import club.yuyang.subject.entity.Institute;
 import club.yuyang.subject.service.InstituteService;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.util.List;
 
 /**
  * @author yuyang
@@ -21,5 +23,15 @@ public class InstituteServiceImpl implements InstituteService {
     public String getInstituteName(Integer instituteId) {
         String instituteName = instituteDao.findNameByInstituteId(instituteId);
         return instituteName;
+    }
+
+    @Override
+    public List<Institute> getAllInstitutes() {
+        return instituteDao.getAllInstitutes();
+    }
+
+    @Override
+    public int deleteOne(Integer instituteId) {
+       return instituteDao.deleteOne(instituteId);
     }
 }
