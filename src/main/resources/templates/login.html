@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>登录页</title>
+    <link rel="stylesheet" href="/static/css/bootstrap.css">
+    <link rel="stylesheet" href="/static/css/bootstrap-theme.css">
+    <link rel="stylesheet" href="/static/css/loginPage.css">
+    <script src="/static/js/jquery-3.4.1.js"></script>
+    <script src="/static/js/bootstrap.js"></script>
+</head>
+<body>
+<div class="login_container">
+    <div class="header">
+        <div class="head_log">
+            <img src="/static/img/logo.png" height="60" width="60"/>
+            我要蹭课
+        </div>
+    </div>
+
+    <h3 class="login_title" th:text="${warn!=null ? warn : message}"></h3>
+    <div class="login_content">
+        <div class="content_wrapper">
+            <div class="wrapper_left"></div>
+            <div class="wrapper_right">
+                <form action="/index" method="post">
+                    <input class="Input" type="text" name="account" required placeholder="请输入账号...">
+                    <input class="Input" type="password" name="password" required placeholder="请输入密码...">
+                    <a type="button" class="btn btn-info Btn" href="/join">我要注册</a>　
+                    <input type="submit" class="btn btn-primary Btn" value="立即登录">
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+
+</html>

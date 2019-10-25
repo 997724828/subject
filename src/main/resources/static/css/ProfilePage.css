@@ -1,0 +1,112 @@
+.person_container{
+    width:100%;
+    height: 550px;
+    border: 1px solid black;
+    margin: 10px;
+    border-radius: 8px;
+    background-color: #2aabd2;
+}
+
+.content_left{
+    width:180px;
+    height:500px;
+    margin: 5px;
+    border-radius: 8px;
+    background-color: #2aabd2;
+    /*border: 1px solid black;*/
+    float: left;
+}
+
+.content_left .left_up{
+    width:180px;
+    height:108px;
+    margin: 0px;
+    border-radius: 8px;
+    border: 2px solid black;
+    padding: 5px;
+    background-color: white;
+}
+
+.person_url{
+    list-style-type: none;
+    margin: 0px;
+    padding-left: 5px;
+}
+
+.person_url li{
+    display: block;
+    border-bottom: 1px solid gray;
+    line-height: 30px;
+    margin-top: 8px;
+}
+
+.icon{
+    height: 30px;
+    width: 30px;
+}
+
+.content_left .left_down{
+    width:180px;
+    height:405px;
+    border-radius: 8px;
+    border: 2px solid black;
+    padding: 5px;
+    margin-top: 10px;
+    background-color: white;
+}
+
+.content_right{
+    width: 60%;
+    height:523px;
+    margin: 5px 0px 0px 15px;
+    background-color: white;
+    border: 2px solid black;
+    border-radius: 8px;
+    float: left;
+}
+
+#location{
+    padding: 5px;
+    width: 17%;
+    height:523px;
+    margin: 5px 0px 0px 15px;
+    background-color: white;
+    border: 2px solid black;
+    border-radius: 8px;
+    float: left;
+}
+
+.advert{
+    width:420px;
+    height: 210px;
+    border: 2px solid black;
+    background-color:lightgray;
+    float: left;
+    margin: 20px;
+    border-radius: 8px;
+
+}
+
+.classBtn{
+    width: 200px;
+    float: right;
+    margin-top: 50px;
+    text-align: center;
+}
+
+.classBtn .cbn{
+    margin: 5px;
+}
+
+.location_f{
+    margin: 5px;
+}
+
+.actived{
+    background-color: lightskyblue;
+}
+
+.inputs{
+    width: 200px;
+
+}

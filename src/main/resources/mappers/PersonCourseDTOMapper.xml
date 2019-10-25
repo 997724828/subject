@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="club.yuyang.subject.dao.PersonCourseDTODao">
+
+
+    <select id="getPersonCourse" parameterType="club.yuyang.subject.entity.User" resultType="club.yuyang.subject.dto.PersonCourseDTO">
+       select course_id,teacher,times,sections,address,types from classmatecourse where classmate_id=#{classmateId}
+       union all
+       select course_id,teacher,times,sections,address,types from selectcourse where account=#{account}
+       order by times,sections;
+    </select>
+</mapper>

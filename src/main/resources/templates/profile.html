@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>蹭课系统</title>
+    <link rel="stylesheet" href="/static/css/bootstrap.css">
+    <link rel="stylesheet" href="/static/css/bootstrap-theme.css">
+    <link rel="stylesheet" href="/static/css/navigation.css">
+    <link rel="stylesheet" href="/static/css/ProfilePage.css">
+    <script src="/static/js/jquery-3.4.1.js"></script>
+    <script src="/static/js/bootstrap.js"></script>
+</head>
+<body>
+<!--引入页头-->
+<div th:replace="fragments/navigation :: nav"></div>
+<div class="person_container">
+    <!--左边导航栏-->
+    <div class="content_left">
+        <div class="left_up">
+            <ul class="person_url">
+                <li th:classappend="${classmateCourseDTOS}?'actived':''">
+                    <img src="/static/img/class-icon.png" class="icon"/>&nbsp;<a href="/classmateCourse">班级课表</a>
+                </li>
+                <li th:classappend="${personCourseDTOS}?'actived':''">
+                    <img src="/static/img/mySubject-icon.png" class="icon"/>&nbsp;<a href="/personCourse">我的课表</a>
+                </li>
+            </ul>
+        </div>
+        <div class="left_down">
+            <ul class="person_url">
+                <li><img src="/static/img/cengke-icon.png" class="icon"/>&nbsp;
+                    <a href="#">我要蹭课</a>
+                </li>
+                <li><img src="/static/img/changePaw-icon.png" class="icon"/>&nbsp;
+                    <a style="cursor: pointer" data-toggle="modal" data-target="#PawModal">修改密码</a></li>
+            </ul>
+        </div>
+    </div>
+    <div class="content_right">
+        <!--显示班级课表-->
+        <div id="classmateCourse" style="padding: 10px;" th:if="${classmateCourseDTOS}">
+            <div style="float: left">
+                <h4>班级课表</h4>
+                <h4>当前学期：<span>2019-2020 第一学期</span></h4>
+                <h4>当前周数：<span>第三周</span></h4>
+            </div>
+            <table class="table table-hover">
+                <tr>
+                    <th>序号</th>
+                    <th>课程</th>
+                    <th>教师</th>
+                    <th>时间</th>
+                    <th>节次</th>
+                    <th>教室</th>
+                    <th>类型</th>
+
+                </tr>
+                <tr th:each="list,listState:${classmateCourseDTOS}">
+                    <td th:text="${listState.count}"></td>
+                    <td th:text="${list.courseName}"></td>
+                    <td th:text="${list.teacher}"></td>
+                    <td th:text="${list.times}"></td>
+                    <td th:text="${list.sections}"></td>
+                    <td th:text="${list.address}"></td>
+                    <td th:text="${list.types}"></td>
+                </tr>
+            </table>
+        </div>
+
+        <!--显示个人课表-->
+        <div id="personCourse" style="padding: 10px;" th:if="${personCourseDTOS}">
+            <div style="float: left">
+                <h4>我的课表</h4>
+                <h4>当前学期：<span>2019-2020 第一学期</span></h4>
+                <h4>当前周数：<span>第三周</span></h4>
+            </div>
+            <div class="classBtn">
+                <button class="btn btn-info cbn" data-toggle="modal" data-target="#myModal" id="addCourse">添加课程</button>
+                <button class="btn btn-success cbn">当前周数</button>
+            </div>
+            <table class="table table-hover">
+                <tr>
+                    <th>序号</th>
+                    <th>课程</th>
+                    <th>教师</th>
+                    <th>时间</th>
+                    <th>节次</th>
+                    <th>教室</th>
+                    <th>类型</th>
+                    <!--<th>操作</th>-->
+                </tr>
+                <tr th:each="list,listState:${personCourseDTOS}">
+                    <td th:text="${listState.count}"></td>
+                    <td th:text="${list.courseName}"></td>
+                    <td th:text="${list.teacher}"></td>
+                    <td th:text="${list.times}"></td>
+                    <td th:text="${list.sections}"></td>
+                    <td th:text="${list.address}"></td>
+                    <td th:text="${list.types}"></td>
+                    <!--<td><a class="btn btn-danger btn-xs" th:href="@{'del/'+${list.id}+'/person'}">删除</a>-->
+                        <!--<button class="btn btn-danger btn-xs" th:id="${list.id}" onclick="updateCourse(this)">编辑</button>-->
+                    <!--</td>-->
+                </tr>
+            </table>
+        </div>
+
+    </div>
+    <!--右侧公告栏-->
+    <div id="location">
+        <div class="location_f">
+            二级学院：<br>
+            <span class="label label-info" th:text="${session.user.instituteName}"></span>
+        </div>
+        <div class="location_f">
+            我的班级：<br>
+            <span class="label label-warning" th:text="${session.user.classmateName}"></span>
+        </div>
+    </div>
+</div>
+</body>
+</html>
