@@ -28,8 +28,8 @@
         </div>
         <div class="left_down">
             <ul class="person_url">
-                <li><img src="/static/img/cengke-icon.png" class="icon"/>&nbsp;
-                    <a class="icon">我要选课</a>
+                <li th:classappend="${allCourses}?'actived':''">
+                    <img src="/static/img/cengke-icon.png" class="icon"/>&nbsp;<a href="/rubCourse">我要蹭课</a>
                 </li>
                 <li><img src="/static/img/changePaw-icon.png" class="icon"/>&nbsp;
                     <a style="cursor: pointer" data-toggle="modal" data-target="#PawModal">修改密码</a></li>
@@ -39,8 +39,10 @@
     <div class="content_right">
         <!--显示班级课表-->
         <div id="classmateCourse" style="padding: 10px;" th:if="${classmateCourseDTOS}">
-            <div style="float: left">
+            <div style="border-bottom: 1px solid">
                 <h4>班级课表</h4>
+            </div>
+            <div style="float: left">
                 <h4>当前学期：<span>2019-2020 第一学期</span></h4>
                 <h4>当前周数：<span>第三周</span></h4>
             </div>
@@ -58,7 +60,7 @@
                     <td th:text="${listState.count}"></td>
                     <td th:text="${list.courseName}"></td>
                     <td th:text="${list.teacher}"></td>
-                    <td th:text="${list.times}"></td>
+                    <td th:text="${list.weekName}"></td>
                     <td th:text="${list.sections}"></td>
                     <td th:text="${list.address}"></td>
                     <td th:text="${list.types}"></td>
@@ -68,8 +70,10 @@
 
         <!--显示个人课表-->
         <div id="personCourse" style="padding: 10px;" th:if="${personCourseDTOS}">
-            <div style="float: left">
+            <div style="border-bottom: 1px solid">
                 <h4>我的课表</h4>
+            </div>
+            <div style="float: left">
                 <h4>当前学期：<span>2019-2020 第一学期</span></h4>
                 <h4>当前周数：<span>第三周</span></h4>
             </div>
@@ -92,7 +96,7 @@
                     <td th:text="${listState.count}"></td>
                     <td th:text="${list.courseName}"></td>
                     <td th:text="${list.teacher}"></td>
-                    <td th:text="${list.times}"></td>
+                    <td th:text="${list.weekName}"></td>
                     <td th:text="${list.sections}"></td>
                     <td th:text="${list.address}"></td>
                     <td th:text="${list.types}"></td>
@@ -102,51 +106,57 @@
                 </tr>
             </table>
         </div>
+
+        <!--显示蹭课列表-->
+        <div id="rubCourse" style="padding: 10px;" th:if="${rubCourse}">
+            <div style="border-bottom: 1px solid">
+                <h4>我要蹭课</h4>
+            </div>
+            <div style="float: left">
+                <div class="checkedBox">
+                    <span>请选择学院:</span>
+                    <select id="institutes" name="institutes" class="form-control inputs" >
+                        <option value=" " selected></option>
+                        <option th:each="list : ${allInstitutes}" th:text="${list.instituteName}" th:value="${list.instituteId}"></option>
+                    </select>
+                </div>
+                <div class="checkedBox">
+                    <span>选择感兴趣的课程:</span>
+                    <select id="courses" name="courses" class="form-control inputs" >
+                        <!--<option th:each="list : ${allCourses}" th:text="${list.courseName}" th:value="${list.courseId}"></option>-->
+                    </select>
+                </div>
+            </div>
+            <table class="table table-hover">
+                <tr>
+                    <th>序号</th>
+                    <th>课程</th>
+                    <th>教师</th>
+                    <th>开课班级</th>
+                    <th>时间</th>
+                    <th>节次</th>
+                    <th>教室</th>
+                </tr>
+            </table>
+        </div>
+
+        <!--&lt;!&ndash;蹭课模态框&ndash;&gt;-->
         <!--<div class="modal fade" id="selectModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">-->
             <!--<div class="modal-dialog" role="document">-->
                 <!--<div class="modal-content">-->
-                    <!--<form action="#" method="post" style="text-align: left;" id="addOrUpdateForm">-->
-                        <!--<div class="modal-header">-->
-                            <!--<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>-->
-                            <!--<h4 class="modal-title" id="myModalLabel">选择课程</h4>-->
-                        <!--</div>-->
-                        <!--<div class="modal-body">-->
-                            <!--<input type="hidden" name="schoolId" th:value="${session.user.schoolId}">-->
-                            <!--<input type="hidden" name="instituteId" th:value="${session.user.instituteId}">-->
-                            <!--<input type="hidden" name="classmateId" th:value="${session.user.classmateId}">-->
-                            <!--课程名称：<input type="text" id="courseName" name="courseName" class="form-control inputs" required/><br>-->
-                            <!--教室地点：<input type="text" id="address" name="address" class="form-control inputs" required/><br>-->
-                            <!--授课老师：<input type="text" id="teacherName" name="teacherName" class="form-control inputs" required/><br>-->
-                            <!--时间：-->
-                            <!--<div style="margin-bottom: 20px;">-->
-                                <!--<select id="times" name="times" class="form-control inputs" style="float: left;">-->
-                                    <!--<option value ="星期一">周一</option>-->
-                                    <!--<option value ="星期二">周二</option>-->
-                                    <!--<option value ="星期三">周三</option>-->
-                                    <!--<option value ="星期四">周四</option>-->
-                                    <!--<option value ="星期五">周五</option>-->
-                                    <!--<option value ="星期六">周六</option>-->
-                                    <!--<option value ="星期日">周日</option>-->
-                                <!--</select>-->
-                                <!--<select id="sections" name="sections" class="form-control inputs">-->
-                                    <!--<option value ="1-2">1-2</option>-->
-                                    <!--<option value ="3-4">3-4</option>-->
-                                    <!--<option value ="5-6">5-6</option>-->
-                                    <!--<option value ="7-8">7-8</option>-->
-                                    <!--<option value ="9-10">9-10</option>-->
-                                    <!--<option value ="11">11</option>-->
-                                <!--</select>-->
-                            <!--</div>-->
-                            <!--<div>类型：-->
-                                <!--<label><input id="type1" type="radio" name="types" value="必修" checked>必修</label>-->
-                                <!--<label><input id="type2" type="radio" name="types" value="选修">选修</label>-->
-                            <!--</div>-->
-                        <!--</div>-->
-                        <!--<div class="modal-footer">-->
-                            <!--<button type="button" class="btn btn-default" data-dismiss="modal">取消</button>-->
-                            <!--<button type="submit" class="btn btn-primary">提交</button>-->
-                        <!--</div>-->
-                    <!--</form>-->
+                    <!--<div class="modal-header">-->
+                        <!--<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>-->
+                        <!--<h4 class="modal-title" id="myModalLabel">我要蹭课</h4>-->
+                    <!--</div>-->
+                    <!--<div class="modal-body">-->
+                        <!--<select id="coursenames" name="coursenames" class="form-control inputs" >-->
+                            <!--<option th:each="list : ${allCourses}" th:text="${list.courseName}" th:value="${list.courseId}"></option>-->
+                        <!--</select>-->
+                    <!--</div>-->
+                    <!--<div class="modal-footer">-->
+                    <!--<button type="button" class="btn btn-default" data-dismiss="modal">取消</button>-->
+                    <!--<button type="submit" class="btn btn-primary">提交</button>-->
+                    <!--</div>-->
                 <!--</div>-->
             <!--</div>-->
         <!--</div>-->
@@ -165,4 +175,69 @@
     </div>
 </div>
 </body>
+<script>
+    $(function () {
+        $("#selectCourse").click(function () {
+            $("#selectModal").modal({
+                backdrop: false, // 相当于data-backdrop
+                keyboard: true, // 相当于data-keyboard，键盘上的 esc 键被按下时关闭模态框。
+                show: true, // 相当于data-show
+            });
+        });
+
+        //实现我要蹭课模块点击学院拉取对应课程数据
+        $("#institutes").change(function(){
+            var instituteId = $("#institutes option:selected").val();
+            //清空course的select的值
+            $("#courses").empty();
+            $.ajax({
+                dataType :'json',
+                type : "GET",
+                url : "/getCourseByInstituteId",
+                data : {
+                    "instituteId" : instituteId
+                },
+                success : function(courses) {
+                    console.log(courses);
+                    $.each(courses, function (index) {
+                        var courseName = courses[index].courseName;
+                        var courseId = courses[index].courseId;
+                        //构造动态option
+                        $('#courses').append("<option value='"+courseId+"'>"+courseName+"</option>")
+                    });
+                },
+                error : function() {
+                    alert("课程拉取失败！")
+                }
+            });
+        });
+
+        //实现我要蹭课模块点击课程拉取对应所有课程信息数据
+        $("#courses").change(function(){
+            var courseId = $("#institutes option:selected").val();
+            //清空course的select的值
+            $("#courses").empty();
+            $.ajax({
+                dataType :'json',
+                type : "GET",
+                url : "/getCourseByInstituteId",
+                data : {
+                    "instituteId" : instituteId
+                },
+                success : function(courses) {
+                    console.log(courses);
+                    $.each(courses, function (index) {
+                        var courseName = courses[index].courseName;
+                        var courseId = courses[index].courseId;
+                        //构造动态option
+                        $('#courses').append("<option value='"+courseId+"'>"+courseName+"</option>")
+                    });
+                },
+                error : function() {
+                    alert("课程拉取失败！")
+                }
+            });
+        });
+    })
+</script>
 </html>

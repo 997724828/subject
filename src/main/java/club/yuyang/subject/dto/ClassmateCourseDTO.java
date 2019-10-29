@@ -12,7 +12,8 @@ public class ClassmateCourseDTO {
     private String classmateName;
     private String teacher;
     private String address;
-    private String times;
+    private int times;
+    private String weekName;//显示星期几，原来的times字段只是个数字
     private String sections;
     private String types;
 
@@ -72,12 +73,20 @@ public class ClassmateCourseDTO {
         this.address = address;
     }
 
-    public String getTimes() {
+    public int getTimes() {
         return times;
     }
 
-    public void setTimes(String times) {
+    public void setTimes(int times) {
         this.times = times;
+    }
+
+    public String getWeekName() {
+        return weekName;
+    }
+
+    public void setWeekName(String weekName) {
+        this.weekName = weekName;
     }
 
     public String getSections() {

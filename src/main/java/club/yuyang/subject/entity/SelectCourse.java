@@ -11,7 +11,7 @@ public class SelectCourse {
     private String account;
     private String teacher;
     private String address;
-    private String times;
+    private int times;
     private String sections;
     private String types;
 
@@ -55,11 +55,11 @@ public class SelectCourse {
         this.address = address;
     }
 
-    public String getTimes() {
+    public int getTimes() {
         return times;
     }
 
-    public void setTimes(String times) {
+    public void setTimes(int times) {
         this.times = times;
     }
 

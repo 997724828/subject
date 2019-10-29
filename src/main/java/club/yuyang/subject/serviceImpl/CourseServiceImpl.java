@@ -6,6 +6,7 @@ import club.yuyang.subject.service.CourseService;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.util.List;
 
 /**
  * @author yuyang
@@ -18,7 +19,11 @@ public class CourseServiceImpl implements CourseService {
 
     @Override
     public Course getCourseById(Integer courseId) {
-
         return courseDao.getCourseById(courseId);
+    }
+
+    @Override
+    public List<Course> getAllCourse(Integer instituteId) {
+        return courseDao.getAllCourse(instituteId);
     }
 }

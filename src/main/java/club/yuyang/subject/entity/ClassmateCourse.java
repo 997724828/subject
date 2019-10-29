@@ -10,7 +10,7 @@ public class ClassmateCourse {
     private Integer classmateId;
     private String teacher;
     private String address;
-    private String times;
+    private int times;
     private String sections;
     private String types;
 
@@ -54,11 +54,11 @@ public class ClassmateCourse {
         this.address = address;
     }
 
-    public String getTimes() {
+    public int getTimes() {
         return times;
     }
 
-    public void setTimes(String times) {
+    public void setTimes(int times) {
         this.times = times;
     }
 

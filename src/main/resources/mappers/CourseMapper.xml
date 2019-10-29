@@ -7,4 +7,7 @@
         select * from  course where course_id = #{courseId}
     </select>
 
+    <select id="getAllCourse" parameterType="java.lang.Integer" resultType="club.yuyang.subject.entity.Course">
+        select *from  course where institute_id=#{instituteId};
+    </select>
 </mapper>

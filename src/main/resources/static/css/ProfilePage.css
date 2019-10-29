@@ -111,3 +111,16 @@
     width: 200px;
 
 }
+
+.checkedBox{
+    float: left;
+    border: 1px solid;
+    padding: 5px;
+}
+
+.checkedBox span{
+    font-size: 13px;
+    font-family: "Adobe Naskh Medium";
+    color: blue;
+    font-weight: bold;
+}
