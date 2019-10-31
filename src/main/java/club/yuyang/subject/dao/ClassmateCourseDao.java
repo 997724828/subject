@@ -15,4 +15,11 @@ public interface ClassmateCourseDao {
 
     List<ClassmateCourse> getClassmateCourse(Integer classmateId);
 
+    List<ClassmateCourse> getRubCourse(Integer courseId);//获得想要蹭课的课程
+
+    ClassmateCourse getClassmateCourseById(Integer id);
+
+    //判断是否与现在课程冲突
+    ClassmateCourse isExitCourse(ClassmateCourse classmateCourse);
+
 }

@@ -15,10 +15,20 @@ import java.util.List;
 @Service
 public class SelectCourseServiceImpl implements SelectCourseService {
     @Resource
-    SelectCourseDao personCourseDao;
+    SelectCourseDao selectCourseDao;
 
     @Override
     public List<SelectCourse> getPersonCourse(String account) {
-        return personCourseDao.getPersonCourse(account);
+        return selectCourseDao.getPersonCourse(account);
+    }
+
+    @Override
+    public SelectCourse isExitCourse(SelectCourse selectCourse) {
+        return selectCourseDao.isExitCourse(selectCourse);
+    }
+
+    @Override
+    public void insertSelectCourse(SelectCourse selectCourse) {
+         selectCourseDao.insertSelectCourse(selectCourse);
     }
 }

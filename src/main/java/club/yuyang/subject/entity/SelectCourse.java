@@ -8,12 +8,22 @@ public class SelectCourse {
 
     private Integer id;
     private Integer courseId;
+    private Integer instituteId;
     private String account;
     private String teacher;
     private String address;
     private int times;
     private String sections;
     private String types;
+
+
+    public Integer getInstituteId() {
+        return instituteId;
+    }
+
+    public void setInstituteId(Integer instituteId) {
+        this.instituteId = instituteId;
+    }
 
     public Integer getId() {
         return id;

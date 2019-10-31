@@ -12,4 +12,9 @@ import java.util.List;
 @Mapper
 public interface SelectCourseDao {
     List<SelectCourse> getPersonCourse(String account);
+
+    SelectCourse isExitCourse(SelectCourse selectCourse);
+
+    //添加蹭的课程
+    void insertSelectCourse(SelectCourse selectCourse);
 }

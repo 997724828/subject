@@ -11,4 +11,11 @@ import java.util.List;
  */
 public interface ClassmateCourseService{
     List<ClassmateCourse> getClassmateCourse(Integer classmateId);
+
+    List<ClassmateCourse> getRubCourse(Integer courseId);//获得想要蹭课的课程信息
+
+    ClassmateCourse getClassmateCourseById(Integer id);
+
+    //判断是否与现在课程冲突
+    ClassmateCourse isExitCourse(ClassmateCourse classmateCourse);
 }

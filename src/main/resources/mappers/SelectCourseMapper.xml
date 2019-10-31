@@ -5,4 +5,17 @@
     <select id="getPersonCourse" parameterType="java.lang.String" resultType="club.yuyang.subject.entity.SelectCourse">
         select * from selectCourse where account=#{account} order by times,sections
     </select>
+
+    <select id="isExitCourse" parameterType="club.yuyang.subject.entity.SelectCourse" resultType="club.yuyang.subject.entity.SelectCourse">
+        select * from selectCourse where account=#{account}
+                                  and times =#{times}
+                                  and sections=#{sections}
+    </select>
+
+    <insert id="insertSelectCourse" parameterType="club.yuyang.subject.entity.SelectCourse">
+        insert into selectcourse (institute_id,course_id,account,teacher,sections,times,address,types)
+        values (#{instituteId},#{courseId},#{account},#{teacher},#{sections},#{times},#{address},#{types})
+    </insert>
+
+
 </mapper>

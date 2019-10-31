@@ -7,6 +7,7 @@ package club.yuyang.subject.entity;
 public class ClassmateCourse {
     private Integer id;
     private Integer courseId;
+    private Integer instituteId;
     private Integer classmateId;
     private String teacher;
     private String address;
@@ -14,12 +15,22 @@ public class ClassmateCourse {
     private String sections;
     private String types;
 
+
+
     public Integer getId() {
         return id;
     }
 
     public void setId(Integer id) {
         this.id = id;
+    }
+
+    public Integer getInstituteId() {
+        return instituteId;
+    }
+
+    public void setInstituteId(Integer instituteId) {
+        this.instituteId = instituteId;
     }
 
     public Integer getCourseId() {

@@ -1,5 +1,6 @@
 package club.yuyang.subject.service;
 
+import club.yuyang.subject.entity.ClassmateCourse;
 import club.yuyang.subject.entity.SelectCourse;
 
 import java.util.List;
@@ -10,4 +11,9 @@ import java.util.List;
  */
 public interface SelectCourseService {
     List<SelectCourse> getPersonCourse(String account);
+
+    SelectCourse isExitCourse(SelectCourse selectCourse);
+
+    //添加蹭的课程
+    void insertSelectCourse(SelectCourse selectCourse);
 }

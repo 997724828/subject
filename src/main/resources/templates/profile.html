@@ -28,7 +28,7 @@
         </div>
         <div class="left_down">
             <ul class="person_url">
-                <li th:classappend="${allCourses}?'actived':''">
+                <li th:classappend="${rubCourse}?'actived':''">
                     <img src="/static/img/cengke-icon.png" class="icon"/>&nbsp;<a href="/rubCourse">我要蹭课</a>
                 </li>
                 <li><img src="/static/img/changePaw-icon.png" class="icon"/>&nbsp;
@@ -90,7 +90,6 @@
                     <th>节次</th>
                     <th>教室</th>
                     <th>类型</th>
-                    <!--<th>操作</th>-->
                 </tr>
                 <tr th:each="list,listState:${personCourseDTOS}">
                     <td th:text="${listState.count}"></td>
@@ -100,9 +99,9 @@
                     <td th:text="${list.sections}"></td>
                     <td th:text="${list.address}"></td>
                     <td th:text="${list.types}"></td>
-                    <!--<td><a class="btn btn-danger btn-xs" th:href="@{'del/'+${list.id}+'/person'}">删除</a>-->
-                        <!--<button class="btn btn-danger btn-xs" th:id="${list.id}" onclick="updateCourse(this)">编辑</button>-->
-                    <!--</td>-->
+                    <td><a class="btn btn-danger btn-xs" th:href="@{'del/'+${list.courseName}+'/person'}">删除</a>
+                        <button class="btn btn-danger btn-xs" th:id="${list.courseName}">编辑</button>
+                    </td>
                 </tr>
             </table>
         </div>
@@ -114,16 +113,13 @@
             </div>
             <div style="float: left">
                 <div class="checkedBox">
-                    <span>请选择学院:</span>
                     <select id="institutes" name="institutes" class="form-control inputs" >
-                        <option value=" " selected></option>
+                        <option value='' class="optionStyle" selected>请选择学院</option>
                         <option th:each="list : ${allInstitutes}" th:text="${list.instituteName}" th:value="${list.instituteId}"></option>
                     </select>
                 </div>
                 <div class="checkedBox">
-                    <span>选择感兴趣的课程:</span>
                     <select id="courses" name="courses" class="form-control inputs" >
-                        <!--<option th:each="list : ${allCourses}" th:text="${list.courseName}" th:value="${list.courseId}"></option>-->
                     </select>
                 </div>
             </div>
@@ -136,30 +132,13 @@
                     <th>时间</th>
                     <th>节次</th>
                     <th>教室</th>
+                    <th>操作</th>
                 </tr>
+                <tbody id="rubList">
+                    <!--ajax动态添加表格-->
+                </tbody>
             </table>
         </div>
-
-        <!--&lt;!&ndash;蹭课模态框&ndash;&gt;-->
-        <!--<div class="modal fade" id="selectModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">-->
-            <!--<div class="modal-dialog" role="document">-->
-                <!--<div class="modal-content">-->
-                    <!--<div class="modal-header">-->
-                        <!--<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>-->
-                        <!--<h4 class="modal-title" id="myModalLabel">我要蹭课</h4>-->
-                    <!--</div>-->
-                    <!--<div class="modal-body">-->
-                        <!--<select id="coursenames" name="coursenames" class="form-control inputs" >-->
-                            <!--<option th:each="list : ${allCourses}" th:text="${list.courseName}" th:value="${list.courseId}"></option>-->
-                        <!--</select>-->
-                    <!--</div>-->
-                    <!--<div class="modal-footer">-->
-                    <!--<button type="button" class="btn btn-default" data-dismiss="modal">取消</button>-->
-                    <!--<button type="submit" class="btn btn-primary">提交</button>-->
-                    <!--</div>-->
-                <!--</div>-->
-            <!--</div>-->
-        <!--</div>-->
 
     </div>
     <!--右侧公告栏-->
@@ -198,7 +177,7 @@
                     "instituteId" : instituteId
                 },
                 success : function(courses) {
-                    console.log(courses);
+                    $('#courses').append("<option value='' class='optionStyle'>请选择感兴趣的课程</option>");
                     $.each(courses, function (index) {
                         var courseName = courses[index].courseName;
                         var courseId = courses[index].courseId;
@@ -214,30 +193,48 @@
 
         //实现我要蹭课模块点击课程拉取对应所有课程信息数据
         $("#courses").change(function(){
-            var courseId = $("#institutes option:selected").val();
-            //清空course的select的值
-            $("#courses").empty();
+
+             var courseId = $("#courses option:selected").val();
+
             $.ajax({
                 dataType :'json',
                 type : "GET",
-                url : "/getCourseByInstituteId",
+                url : "/getRubCourses",
                 data : {
-                    "instituteId" : instituteId
+                    "courseId" : courseId
                 },
-                success : function(courses) {
-                    console.log(courses);
-                    $.each(courses, function (index) {
-                        var courseName = courses[index].courseName;
-                        var courseId = courses[index].courseId;
-                        //构造动态option
-                        $('#courses').append("<option value='"+courseId+"'>"+courseName+"</option>")
+                success : function(rubCourseList) {
+                    var str = "";
+
+                     $.each(rubCourseList, function (index) {
+                         var id = rubCourseList[index].id;
+                         var courseName = rubCourseList[index].courseName;
+                         var teacher = rubCourseList[index].teacher;
+                         var classmateName = rubCourseList[index].classmateName;
+                         var weekName = rubCourseList[index].weekName;
+                         var sections = rubCourseList[index].sections;
+                         var address = rubCourseList[index].address;
+
+                         str += "<tr>" +
+                             "<td>" + (index+1) + "</td>" +
+                             "<td>" + courseName + "</td>" +
+                             "<td>" + teacher + "</td>" +
+                             "<td>" + classmateName + "</td>" +
+                             "<td>" + weekName + "</td>" +
+                             "<td>" + sections + "</td>" +
+                             "<td>" + address + "</td>" +
+                             "<td><a class='btn btn-xs btn-info' title='添加到我的课表' href='/addRubCourseIntoPerson/" + id +
+                             "'>+</a></td>" +
+                             "</tr>";
                     });
+                     $('#rubList').html("");
+                     $('#rubList').append(str);
                 },
                 error : function() {
-                    alert("课程拉取失败！")
+                    alert("对应课程列表拉取失败！")
                 }
             });
-        });
+         });
     })
 </script>
 </html>

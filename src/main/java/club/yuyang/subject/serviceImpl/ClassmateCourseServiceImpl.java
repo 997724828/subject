@@ -21,4 +21,19 @@ public class ClassmateCourseServiceImpl implements ClassmateCourseService {
     public List<ClassmateCourse> getClassmateCourse(Integer classmateId) {
         return classmateCourseDao.getClassmateCourse(classmateId);
     }
+
+    @Override
+    public List<ClassmateCourse> getRubCourse(Integer courseId) {
+        return classmateCourseDao.getRubCourse(courseId);
+    }
+
+    @Override
+    public ClassmateCourse getClassmateCourseById(Integer id) {
+        return classmateCourseDao.getClassmateCourseById(id);
+    }
+
+    @Override
+    public ClassmateCourse isExitCourse(ClassmateCourse classmateCourse) {
+        return classmateCourseDao.isExitCourse(classmateCourse);
+    }
 }

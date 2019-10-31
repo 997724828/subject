@@ -5,4 +5,18 @@
     <select id="getClassmateCourse" parameterType="java.lang.Integer" resultType="club.yuyang.subject.entity.ClassmateCourse">
         select * from classmateCourse where classmate_id=#{classmateId} order by times,sections
     </select>
+
+    <select id="getRubCourse" parameterType="java.lang.Integer" resultType="club.yuyang.subject.entity.ClassmateCourse">
+        select * from classmateCourse where course_id=#{course} order by times,sections
+    </select>
+
+    <select id="getClassmateCourseById" parameterType="java.lang.Integer" resultType="club.yuyang.subject.entity.ClassmateCourse">
+        select *from classmateCourse where id=#{id}
+    </select>
+
+    <select id="isExitCourse" parameterType="club.yuyang.subject.entity.ClassmateCourse" resultType="club.yuyang.subject.entity.ClassmateCourse">
+        select *from classmateCourse where classmate_id =#{classmateId}
+                                     and times = #{times}
+                                     and sections=#{sections}
+    </select>
 </mapper>
