@@ -31,4 +31,16 @@ public class SelectCourseServiceImpl implements SelectCourseService {
     public void insertSelectCourse(SelectCourse selectCourse) {
          selectCourseDao.insertSelectCourse(selectCourse);
     }
+
+    @Override
+    public boolean delSelectCourseById(Integer id) {
+        int num = selectCourseDao.delSelectCourseById(id);
+        if (num>0){
+            //删除成功
+            return true;
+        }
+        else {
+            return false;
+        }
+    }
 }

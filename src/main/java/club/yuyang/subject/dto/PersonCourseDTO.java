@@ -6,6 +6,7 @@ package club.yuyang.subject.dto;
  */
 public class PersonCourseDTO {
 
+    private Integer id;//选修表中的记录Id方便后期根据id删除蹭课
     private Integer courseId;
     private String courseName;
     private String teacher;
@@ -14,6 +15,14 @@ public class PersonCourseDTO {
     private String weekName;//显示星期几，原来的times字段只是个数字
     private String sections;
     private String types;
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
 
     public Integer getCourseId() {
         return courseId;

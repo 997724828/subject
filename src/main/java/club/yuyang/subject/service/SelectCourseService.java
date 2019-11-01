@@ -16,4 +16,7 @@ public interface SelectCourseService {
 
     //添加蹭的课程
     void insertSelectCourse(SelectCourse selectCourse);
+
+    //删除课程
+    boolean delSelectCourseById(Integer id);
 }

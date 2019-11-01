@@ -17,5 +17,8 @@
         values (#{instituteId},#{courseId},#{account},#{teacher},#{sections},#{times},#{address},#{types})
     </insert>
 
+    <delete id="delSelectCourseById" parameterType="java.lang.Integer">
+        delete from selectcourse where id=#{id}
+    </delete>
 
 </mapper>

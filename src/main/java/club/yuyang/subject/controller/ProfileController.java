@@ -15,7 +15,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
-
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
@@ -155,8 +154,6 @@ public class ProfileController {
                 course2.setAddress(course.getAddress());
                 course2.setTypes("蹭");
                 selectCourseService.insertSelectCourse(course2);
-               List<SelectCourse> list = selectCourseService.getPersonCourse(responseUser.getAccount());
-                System.out.println(list);
                 return "redirect:/personCourse";
             }
         }

@@ -4,9 +4,9 @@
 
 
     <select id="getPersonCourse" parameterType="club.yuyang.subject.entity.User" resultType="club.yuyang.subject.dto.PersonCourseDTO">
-       select course_id,teacher,times,sections,address,types from classmatecourse where classmate_id=#{classmateId}
+       select id,course_id,teacher,times,sections,address,types from classmatecourse where classmate_id=#{classmateId}
        union all
-       select course_id,teacher,times,sections,address,types from selectcourse where account=#{account}
+       select id,course_id,teacher,times,sections,address,types from selectcourse where account=#{account}
        order by times,sections;
     </select>
 </mapper>

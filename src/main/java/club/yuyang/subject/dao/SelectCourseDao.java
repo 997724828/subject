@@ -17,4 +17,7 @@ public interface SelectCourseDao {
 
     //添加蹭的课程
     void insertSelectCourse(SelectCourse selectCourse);
+
+    //根据id删除课程
+    int delSelectCourseById(Integer id);
 }
