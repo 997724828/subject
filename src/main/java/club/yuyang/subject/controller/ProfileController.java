@@ -116,6 +116,7 @@ public class ProfileController {
     }
 
     //添加想要蹭的课程进去个人选课表
+    @ResponseBody
     @GetMapping("/addRubCourseIntoPerson/{id}")
     public String toAddRubCourse(@PathVariable("id")Integer id,
                                  HttpServletRequest request){
@@ -129,9 +130,7 @@ public class ProfileController {
         classmateCourse.setSections(course.getSections());
         ClassmateCourse course1 = classmateCourseService.isExitCourse(classmateCourse);
         if (course1!=null){
-            //说明课程会和必修课冲突
-            request.setAttribute("message", "课程和您的必修课冲突");
-            return "error";
+            return "0";
         }else {
             //检测是否和选修冲突
             SelectCourse selectCourse = new SelectCourse();
@@ -140,9 +139,7 @@ public class ProfileController {
             selectCourse.setSections(course.getSections());
             SelectCourse selectCourse1 = selectCourseService.isExitCourse(selectCourse);
             if(selectCourse1!=null){
-                //说明课程会和选修课冲突
-                request.setAttribute("message", "课程和您的选修课冲突");
-                return "error";
+                return "0";
             }else {
                 SelectCourse course2 = new SelectCourse();
                 course2.setInstituteId(responseUser.getInstituteId());
@@ -154,7 +151,7 @@ public class ProfileController {
                 course2.setAddress(course.getAddress());
                 course2.setTypes("蹭");
                 selectCourseService.insertSelectCourse(course2);
-                return "redirect:/personCourse";
+                return "1";
             }
         }
     }

@@ -14,6 +14,7 @@
 <!--引入页头-->
 <div th:replace="fragments/navigation :: nav"></div>
 <div class="person_container">
+    <span hidden id="error" th:text="${statue}"></span>
     <!--左边导航栏-->
     <div class="content_left">
         <div class="left_up">
@@ -75,12 +76,8 @@
             </div>
             <div style="float: left">
                 <h4>当前学期：<span>2019-2020 第一学期</span></h4>
-                <h4>当前周数：<span>第三周</span></h4>
+                <h4>当前周数：<span id="currentWeek"></span></h4>
             </div>
-            <!--<div class="classBtn">-->
-                <!--<button class="btn btn-info cbn" data-toggle="modal" data-target="#myModal" id="addCourse">添加课程</button>-->
-                <!--<button class="btn btn-success cbn">当前周数</button>-->
-            <!--</div>-->
             <table class="table table-hover">
                 <tr>
                     <th>序号</th>
@@ -101,7 +98,10 @@
                     <td th:text="${list.address}"></td>
                     <td th:text="${list.types}"></td>
                     <td>
-                        <a class="btn btn-danger btn-xs" th:if="${list.types}=='蹭'" th:href="@{'/selectCourse/del/'+${list.id}}">删除</a>
+                        <image th:if="${list.types}!='蹭'" src="/static/img/forbid-icon.png" style="width: 20px;height: 20px;"></image>
+                        <a id="delRubCourse" class="btn btn-danger btn-xs"
+                           th:if="${list.types}=='蹭'" th:href="@{'/selectCourse/del/'+${list.id}}"
+                           onclick="return confirm('确定删除该课程吗？删除后它将会从你的课表中消失')">删除</a>
                     </td>
                 </tr>
             </table>
@@ -144,6 +144,15 @@
     </div>
     <!--右侧公告栏-->
     <div id="location">
+        <div style="height: 45px;border-bottom: solid 1px;margin-bottom: 20px;padding-top: 10px">
+             <span style="font-weight: bold;color: darkslateblue;">
+                   <script type="text/javascript">
+                     var date = new Date();
+                     var date2 = new Date(2019,9,30);
+                     document.write("Today is：" + date.getFullYear() + "年" + (date.getMonth() + 1) + "月" + date.getDate() + "日" + " 星期" + "日一二三四五六".charAt(date.getDay()));
+                   </script>
+             </span>
+        </div>
         <div class="location_f">
             二级学院：<br>
             <span class="label label-info" th:text="${session.user.instituteName}"></span>
@@ -156,86 +165,109 @@
 </div>
 </body>
 <script>
-    $(function () {
-        $("#selectCourse").click(function () {
-            $("#selectModal").modal({
-                backdrop: false, // 相当于data-backdrop
-                keyboard: true, // 相当于data-keyboard，键盘上的 esc 键被按下时关闭模态框。
-                show: true, // 相当于data-show
-            });
-        });
-
-        //实现我要蹭课模块点击学院拉取对应课程数据
-        $("#institutes").change(function(){
-            var instituteId = $("#institutes option:selected").val();
-            //清空course的select的值
-            $("#courses").empty();
-            $.ajax({
-                dataType :'json',
-                type : "GET",
-                url : "/getCourseByInstituteId",
-                data : {
-                    "instituteId" : instituteId
-                },
-                success : function(courses) {
-                    $('#courses').append("<option value='' class='optionStyle'>请选择感兴趣的课程</option>");
-                    $.each(courses, function (index) {
-                        var courseName = courses[index].courseName;
-                        var courseId = courses[index].courseId;
-                        //构造动态option
-                        $('#courses').append("<option value='"+courseId+"'>"+courseName+"</option>")
-                    });
-                },
-                error : function() {
-                    alert("课程拉取失败！")
+    //alert错误内容
+    function isOverried(obj) {
+        $.ajax({
+            dataType :'json',
+            type : "GET",
+            url : "/addRubCourseIntoPerson/"+courseId,
+            success : function(result) {
+                alert(result);
+                if (result=="0"){
+                    alert("添加失败！该课程与你已有课程上课时间冲突");
+                } else if (result=="1"){
+                    alert("添加成功！");
+                } else {
+                    alert("未知错误！");
                 }
-            });
+            },
+            error: function () {
+                alert("拉取后端数据失败！");
+            }
         });
+    }
 
-        //实现我要蹭课模块点击课程拉取对应所有课程信息数据
-        $("#courses").change(function(){
+$(function () {
 
-             var courseId = $("#courses option:selected").val();
+    $("#selectCourse").click(function () {
+        $("#selectModal").modal({
+            backdrop: false, // 相当于data-backdrop
+            keyboard: true, // 相当于data-keyboard，键盘上的 esc 键被按下时关闭模态框。
+            show: true, // 相当于data-show
+        });
+    });
 
-            $.ajax({
-                dataType :'json',
-                type : "GET",
-                url : "/getRubCourses",
-                data : {
-                    "courseId" : courseId
-                },
-                success : function(rubCourseList) {
-                    var str = "";
+    //实现我要蹭课模块点击学院拉取对应课程数据
+    $("#institutes").change(function(){
+        var instituteId = $("#institutes option:selected").val();
+        //清空course的select的值
+        $("#courses").empty();
+        $.ajax({
+            dataType :'json',
+            type : "GET",
+            url : "/getCourseByInstituteId",
+            data : {
+                "instituteId" : instituteId
+            },
+            success : function(courses) {
+                $('#courses').append("<option value='' class='optionStyle'>请选择感兴趣的课程</option>");
+                $.each(courses, function (index) {
+                    var courseName = courses[index].courseName;
+                    var courseId = courses[index].courseId;
+                    //构造动态option
+                    $('#courses').append("<option value='"+courseId+"'>"+courseName+"</option>")
+                });
+            },
+            error : function() {
+                alert("课程拉取失败！")
+            }
+        });
+    });
 
-                     $.each(rubCourseList, function (index) {
-                         var id = rubCourseList[index].id;
-                         var courseName = rubCourseList[index].courseName;
-                         var teacher = rubCourseList[index].teacher;
-                         var classmateName = rubCourseList[index].classmateName;
-                         var weekName = rubCourseList[index].weekName;
-                         var sections = rubCourseList[index].sections;
-                         var address = rubCourseList[index].address;
+    //实现我要蹭课模块点击课程拉取对应所有课程信息数据
+    $("#courses").change(function(){
 
-                         str += "<tr>" +
-                             "<td>" + (index+1) + "</td>" +
-                             "<td>" + courseName + "</td>" +
-                             "<td>" + teacher + "</td>" +
-                             "<td>" + classmateName + "</td>" +
-                             "<td>" + weekName + "</td>" +
-                             "<td>" + sections + "</td>" +
-                             "<td>" + address + "</td>" +
-                             "<td><a class='btn btn-xs btn-info' title='添加到我的课表' href='/addRubCourseIntoPerson/" + id +
-                             "'>+</a></td>" +
-                             "</tr>";
-                    });
-                     $('#rubList').html("");
-                     $('#rubList').append(str);
-                },
-                error : function() {
-                    alert("对应课程列表拉取失败！")
-                }
-            });
-         });
-    })
+         var courseId = $("#courses option:selected").val();
+
+        $.ajax({
+            dataType :'json',
+            type : "GET",
+            url : "/getRubCourses",
+            data : {
+                "courseId" : courseId
+            },
+            success : function(rubCourseList) {
+                var str = "";
+
+                 $.each(rubCourseList, function (index) {
+                     var id = rubCourseList[index].id;
+                     var courseName = rubCourseList[index].courseName;
+                     var teacher = rubCourseList[index].teacher;
+                     var classmateName = rubCourseList[index].classmateName;
+                     var weekName = rubCourseList[index].weekName;
+                     var sections = rubCourseList[index].sections;
+                     var address = rubCourseList[index].address;
+
+                     str += "<tr>" +
+                         "<td>" + (index+1) + "</td>" +
+                         "<td>" + courseName + "</td>" +
+                         "<td>" + teacher + "</td>" +
+                         "<td>" + classmateName + "</td>" +
+                         "<td>" + weekName + "</td>" +
+                         "<td>" + sections + "</td>" +
+                         "<td>" + address + "</td>" +
+                         "<td><a class='btn btn-xs btn-info' title='添加到我的课表' name = '"+id+"' onclick='isOverried(this)'>+</a></td>" +
+                         "</tr>";
+                });
+                 $('#rubList').html("");
+                 $('#rubList').append(str);
+            },
+            error : function() {
+                alert("对应课程列表拉取失败！")
+            }
+        });
+     });
+
+})
 </script>
 </html>
