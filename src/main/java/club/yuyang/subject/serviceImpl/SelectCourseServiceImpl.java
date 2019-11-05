@@ -4,6 +4,7 @@ import club.yuyang.subject.dao.SelectCourseDao;
 import club.yuyang.subject.entity.SelectCourse;
 import club.yuyang.subject.service.SelectCourseService;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
 import java.util.List;
@@ -13,6 +14,7 @@ import java.util.List;
  * @date 2019/10/25 1:12
  */
 @Service
+@Transactional
 public class SelectCourseServiceImpl implements SelectCourseService {
     @Resource
     SelectCourseDao selectCourseDao;
@@ -35,12 +37,6 @@ public class SelectCourseServiceImpl implements SelectCourseService {
     @Override
     public boolean delSelectCourseById(Integer id) {
         int num = selectCourseDao.delSelectCourseById(id);
-        if (num>0){
-            //删除成功
-            return true;
-        }
-        else {
-            return false;
-        }
+        return num>0 ? true : false;
     }
 }

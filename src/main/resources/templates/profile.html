@@ -32,12 +32,15 @@
                 <li th:classappend="${rubCourse}?'actived':''">
                     <img src="/static/img/cengke-icon.png" class="icon"/>&nbsp;<a href="/rubCourse">我要蹭课</a>
                 </li>
-                <li><img src="/static/img/changePaw-icon.png" class="icon"/>&nbsp;
-                    <a style="cursor: pointer" data-toggle="modal" data-target="#PawModal">修改密码</a></li>
+                <li th:classappend="${updatePaw}?'actived':''">
+                    <img src="/static/img/changePaw-icon.png" class="icon"/>&nbsp;
+                    <a style="cursor: pointer" id="upPaw" href="/toUpdatePaw">修改密码</a>
+                </li>
+
             </ul>
         </div>
     </div>
-    <div class="content_right">
+    <div class="content_right" id="content">
         <!--显示班级课表-->
         <div id="classmateCourse" style="padding: 10px;" th:if="${classmateCourseDTOS}">
             <div style="border-bottom: 1px solid">
@@ -141,14 +144,30 @@
             </table>
         </div>
 
+        <div id="updatePaw" style="padding: 10px;" th:if="${updatePaw}">
+            <div style="border-bottom: 1px solid">
+                <h4>修改密码</h4>
+            </div>
+            <div>
+                <span class="label label-info">Username :</span>&emsp;<span class="label label-success" th:text="${session.user.name}"></span>&emsp;
+                <span class="label label-info">Account　:</span>&emsp;<span class="label label-success" th:text="${session.user.account}"></span>
+            </div>
+            <div class="upPaw">
+                <span>请输入原密码:</span><input type="password" class="input-group" name="oldPaw" id="oldPaw" required>
+                <span>请输入新密码:</span><input type="password" class="input-group" name="newPaw" id="newPaw" required>
+                <span>请确认新密码:</span><input type="password" class="input-group" name="agaPaw" id="agaPaw" required>
+                <input type="button" id="subPaw" class="btn btn-info" value="确认修改"/>
+            </div>
+        </div>
+
     </div>
+
     <!--右侧公告栏-->
     <div id="location">
         <div style="height: 45px;border-bottom: solid 1px;margin-bottom: 20px;padding-top: 10px">
              <span style="font-weight: bold;color: darkslateblue;">
                    <script type="text/javascript">
                      var date = new Date();
-                     var date2 = new Date(2019,9,30);
                      document.write("Today is：" + date.getFullYear() + "年" + (date.getMonth() + 1) + "月" + date.getDate() + "日" + " 星期" + "日一二三四五六".charAt(date.getDay()));
                    </script>
              </span>
@@ -167,12 +186,12 @@
 <script>
     //alert错误内容
     function isOverried(obj) {
+        var courseId = $(obj).attr("name");
         $.ajax({
             dataType :'json',
             type : "GET",
             url : "/addRubCourseIntoPerson/"+courseId,
             success : function(result) {
-                alert(result);
                 if (result=="0"){
                     alert("添加失败！该课程与你已有课程上课时间冲突");
                 } else if (result=="1"){
@@ -202,7 +221,7 @@ $(function () {
         var instituteId = $("#institutes option:selected").val();
         //清空course的select的值
         $("#courses").empty();
-        $.ajax({
+        $.  ajax({
             dataType :'json',
             type : "GET",
             url : "/getCourseByInstituteId",
@@ -268,6 +287,42 @@ $(function () {
         });
      });
 
+    //密码修改
+    $("#subPaw").click(function () {
+        var oldPaw = $("#oldPaw").val();
+        var newPaw = $("#newPaw").val();
+        var agaPaw = $("#agaPaw").val();
+        if (oldPaw=="" || newPaw=="" || agaPaw==""){
+            alert("输入框不能为空!");
+            return false;
+        }else if (newPaw!=agaPaw){
+            alert("两次密码输入不一致!");
+            return false;
+        }
+        $.ajax({
+            type:"POST",
+            dataType:"json",
+            url:"/updatePaw",
+            data:{
+                "oldPaw":oldPaw,
+                "newPaw":newPaw,
+                "agaPaw":agaPaw
+            },
+           success:function (result) {
+               if (result==0){
+                   alert("原密码输入错误,请确认是否本人操作！");
+               } else if (result==1){
+                   alert("恭喜！密码修改成功！即将返回重新登录");
+                   location.href="/out";
+               } else if (result==2){
+                   alert("两次密码输入不一致!(后台)");
+               }
+           },
+            error:function () {
+                alert("ajax访问失败");
+            }
+        });
+    })
 })
 </script>
 </html>

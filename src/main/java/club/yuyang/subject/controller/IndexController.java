@@ -4,6 +4,7 @@ package club.yuyang.subject.controller;
 import club.yuyang.subject.dto.UserDTO;
 import club.yuyang.subject.service.UserService;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -52,13 +53,6 @@ public class IndexController {
         }
     }
 
-//    //  跳转注册页
-//    @RequestMapping("/join")
-//    public String join(Model model){
-//
-//        model.addAttribute("schoolList",list);
-//        return "join";
-//    }
 
     //  退出系统
     @RequestMapping("/out")

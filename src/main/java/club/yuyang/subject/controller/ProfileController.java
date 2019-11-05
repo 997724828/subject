@@ -11,11 +11,10 @@ import club.yuyang.subject.service.*;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
+
 import javax.annotation.Resource;
+import javax.jws.WebParam;
 import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
 import java.util.List;
@@ -39,6 +38,8 @@ public class ProfileController {
     InstituteService instituteService;
     @Resource
     ClassmateService classmateService;
+    @Resource
+    UserService userService;
 
 
     //跳转班级课表
@@ -88,6 +89,34 @@ public class ProfileController {
         //发送状态，为了前台知道知道已经跳转蹭课界面
         model.addAttribute("rubCourse","rubCourse");
         return "profile";
+    }
+
+    //跳转密码修改界面
+    @GetMapping("/toUpdatePaw")
+    public String toUpdatePaw(Model model){
+        model.addAttribute("updatePaw","updatePaw");
+        return "profile";
+    }
+
+    //ajax实现密码修改
+    @ResponseBody
+    @PostMapping("/updatePaw")
+    public String updatePaw(HttpServletRequest request,
+                              String oldPaw,String newPaw,String agaPaw){
+        //获取当前用户信息
+        User currentUser = (User)request.getSession().getAttribute("user");
+        User dbUser = userService.login(currentUser.getAccount(),oldPaw);
+        if (dbUser == null){
+            //不是本人操作
+            return "0";
+        }else {
+            //判断两次密码是否输入一致
+            if (newPaw.equals(agaPaw) && userService.isUpdatePaw(currentUser.getAccount(),agaPaw)){
+                return "1";
+            }else{
+                return "2";
+            }
+        }
     }
 
     //实现前端ajax通过选择学院拉取对应所有课程列表

@@ -12,4 +12,8 @@ public interface UserService {
     //   1.1 登录模块
     UserDTO login(String account, String password);
 
+
+    //   1.2 修改密码模块
+    boolean isUpdatePaw(String account, String password);
+
 }

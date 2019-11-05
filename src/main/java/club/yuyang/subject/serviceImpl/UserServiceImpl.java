@@ -46,5 +46,10 @@ public class UserServiceImpl implements UserService {
         }
     }
 
+    @Override
+    public boolean isUpdatePaw(String account, String password) {
+        int num = userDao.updatePaw(account,password);
 
+        return num>0 ? true : false;
+    }
 }
