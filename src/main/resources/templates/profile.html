@@ -36,7 +36,6 @@
                     <img src="/static/img/changePaw-icon.png" class="icon"/>&nbsp;
                     <a style="cursor: pointer" id="upPaw" href="/toUpdatePaw">修改密码</a>
                 </li>
-
             </ul>
         </div>
     </div>
@@ -46,10 +45,9 @@
             <div style="border-bottom: 1px solid">
                 <h4>班级课表</h4>
             </div>
-            <div style="float: left">
-                <h4>当前学期：<span>2019-2020 第一学期</span></h4>
-                <h4>当前周数：<span>第三周</span></h4>
-            </div>
+            <!--引入学期和当前周数-->
+            <div style="float: left" th:replace="fragments/termAndWeek :: termAndWeek"></div>
+
             <table class="table table-hover">
                 <tr>
                     <th>序号</th>
@@ -77,10 +75,9 @@
             <div style="border-bottom: 1px solid">
                 <h4>我的课表</h4>
             </div>
-            <div style="float: left">
-                <h4>当前学期：<span>2019-2020 第一学期</span></h4>
-                <h4>当前周数：<span id="currentWeek"></span></h4>
-            </div>
+                <!--引入学期和当前周数-->
+                <div style="float: left" th:replace="fragments/termAndWeek :: termAndWeek"></div>
+
             <table class="table table-hover">
                 <tr>
                     <th>序号</th>

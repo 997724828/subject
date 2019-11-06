@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<body>
+<div th:fragment="termAndWeek">
+    <h4>当前学期：<span>2019-2020 第一学期</span></h4>
+    <script type="text/javascript">
+        var today = new Date();
+        var startDay = new Date(2019,8,2);
+        var d =Math.ceil((today.valueOf()- startDay.valueOf())/ 86400000);
+        var result =Math.ceil(d/7);
+        document.write( "<h4>当前周数：第"+result+"周</h4>");
+    </script>
+</div>
+</body>
+</html>
