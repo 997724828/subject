@@ -58,7 +58,8 @@
                     <th>教室</th>
                     <th>类型</th>
                 </tr>
-                <tr th:each="list,listState:${classmateCourseDTOS}">
+                <tr th:each="list,listState:${classmateCourseDTOS}"
+                    th:classappend="(${list.times}==${session.currentDate.getDay()}) ? 'tabBGC' : ''">>
                     <td th:text="${listState.count}"></td>
                     <td th:text="${list.courseName}"></td>
                     <td th:text="${list.teacher}"></td>
@@ -89,7 +90,8 @@
                     <th>类型</th>
                     <th>操作</th>
                 </tr>
-                <tr th:each="list,listState:${personCourseDTOS}">
+                <tr th:each="list,listState:${personCourseDTOS}"
+                    th:classappend="(${list.times}==${session.currentDate.getDay()}) ? 'tabBGC' : ''">
                     <td th:text="${listState.count}"></td>
                     <td th:text="${list.courseName}"></td>
                     <td th:text="${list.teacher}"></td>

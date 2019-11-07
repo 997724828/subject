@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.util.Date;
 
 /**
  * @author yuyang
@@ -49,6 +50,7 @@ public class IndexController {
         }else {
             //登陆成功
             request.getSession().setAttribute("user",responseUser);
+            request.getSession().setAttribute("currentDate",new Date());
             return "redirect:/classmateCourse";
         }
     }

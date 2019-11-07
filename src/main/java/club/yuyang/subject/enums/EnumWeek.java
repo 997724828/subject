@@ -5,7 +5,7 @@ package club.yuyang.subject.enums;
  * @date 2019/10/29 13:47
  */
 public enum EnumWeek {
-    MON(1,"星期一"),TUS(2,"星期二"),WEN(3,"星期三"),THU(4,"星期四"),FRI(5,"星期五"),SAT(6,"星期六"),SUN(7,"星期日");
+    MON(1,"星期一"),TUS(2,"星期二"),WEN(3,"星期三"),THU(4,"星期四"),FRI(5,"星期五"),SAT(6,"星期六"),SUN(0,"星期日");
 
 
     private final int weekId;
